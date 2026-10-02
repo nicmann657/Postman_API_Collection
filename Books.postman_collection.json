@@ -1,0 +1,385 @@
+{
+  "info": {
+    "_postman_id": "244a52e6-7732-4c1b-b1a1-52b540c7fa86",
+    "name": "Books",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "55203281",
+    "_collection_link": "https://go.postman.co/collection/55203281-244a52e6-7732-4c1b-b1a1-52b540c7fa86?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "smoke_Api",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "    });",
+              "",
+              "pm.test(\"response time\",()=>{",
+              "    pm.expect(pm.response.responseTime).to.be.below(200);   ",
+              "",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BookApi}}",
+          "host": [
+            "{{BookApi}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "smoke_Api_Status",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BookApi}}/status",
+          "host": [
+            "{{BookApi}}"
+          ],
+          "path": [
+            "status"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get_Public_Inventory",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BookApi}}/books?limit=6&type=fiction",
+          "host": [
+            "{{BookApi}}"
+          ],
+          "path": [
+            "books"
+          ],
+          "query": [
+            {
+              "key": "limit",
+              "value": "6"
+            },
+            {
+              "key": "type",
+              "value": "fiction"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get_Single_Public_Inventory",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "console.clear()"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"status is 200\",() => {",
+              "    pm.response.to.have.status(200);",
+              "} )"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BookApi}}/books/3",
+          "host": [
+            "{{BookApi}}"
+          ],
+          "path": [
+            "books",
+            "3"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get_Orders",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "console.clear()"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "        pm.response.to.have.status(200);    ",
+              "",
+              "                    });     ",
+              "                    pm.test(\"Response time is less than 200ms\", function () {",
+              "                            pm.expect(pm.response.responseTime).to.be.below(200);    ",
+              "                            });     ",
+              "                            pm.test(\"Response body is valid JSON\", function () {",
+              "                                    pm.collectionVariables.set(\"responseBody\", pm.response.text());",
+              "                                    pm.expect(pm.response.json()).to.be.an('array');",
+              "                                    });"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "jwt",
+          "jwt": [
+            {
+              "key": "algorithm",
+              "value": "HS256",
+              "type": "string"
+            },
+            {
+              "key": "isSecretBase64Encoded",
+              "value": false,
+              "type": "boolean"
+            },
+            {
+              "key": "payload",
+              "value": "{}",
+              "type": "string"
+            },
+            {
+              "key": "addTokenTo",
+              "value": "header",
+              "type": "string"
+            },
+            {
+              "key": "headerPrefix",
+              "value": "Bearer",
+              "type": "string"
+            },
+            {
+              "key": "queryParamKey",
+              "value": "token",
+              "type": "string"
+            },
+            {
+              "key": "header",
+              "value": "{}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "29e13ff5820eec1f7cb02f4d9eee3487af08caf6f3f2960483a481c7860d46e5",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{BookApi}}/orders",
+          "host": [
+            "{{BookApi}}"
+          ],
+          "path": [
+            "orders"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create_Client",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"clientName\":\"John Bull\",\n\"clientEmail\":\"bebe@gmail.com\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BookApi}}/api-clients/",
+          "host": [
+            "{{BookApi}}"
+          ],
+          "path": [
+            "api-clients",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "createOrder",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "{{API_KEY}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"bookId\":1,\n\"customerName\":\"{{$randomFullName}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BookApi}}/orders",
+          "host": [
+            "{{BookApi}}"
+          ],
+          "path": [
+            "orders"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update_Order",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "{{API_KEY}}",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"customerName\":\"Nicolas {{$randomLastName}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{BookApi}}/orders/sgNNHpjyT2JJh5Wk8gO5K",
+          "host": [
+            "{{BookApi}}"
+          ],
+          "path": [
+            "orders",
+            "sgNNHpjyT2JJh5Wk8gO5K"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "delete_Order",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "console.clear()"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "//change the orderId in the url peremeter.",
+              "",
+              "pm.test(\"Status code is 204\", () => {",
+              "    pm.response.to.have.status(204);",
+              "    });",
+              "let responseText = pm.response.text();",
+              "console.log(responseText);"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "{{API_KEY}}",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{BookApi}}/orders/sgNNHpjyT2JJh5Wk8gO5K",
+          "host": [
+            "{{BookApi}}"
+          ],
+          "path": [
+            "orders",
+            "sgNNHpjyT2JJh5Wk8gO5K"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "responseBody",
+      "value": ""
+    }
+  ]
+}
